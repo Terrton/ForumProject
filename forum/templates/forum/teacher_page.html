@@ -1,0 +1,27 @@
+{% if request.user.profile.role != 'teacher' and not request.user.is_superuser %}
+<p>Доступ запрещён. Только преподаватели и администраторы могут просматривать эту страницу.</p>
+    {% block footer %}{% endblock %}
+    {% include "forum/footer.html" %}
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="{% static 'js/script.js' %}"></script>
+<img src="{% static 'images/logo.png' %}" alt="Logo">
+{% else %}
+<!-- Основное содержание -->
+{% endif %}
+
+{% extends "forum/base.html" %}
+{% block title %}Преподавательская{% endblock %}
+{% block content %}
+<h2>Добро пожаловать в преподавательский раздел</h2>
+
+<h3>Все темы на форуме:</h3>
+<ul>
+    {% for topic in topics %}
+    <li>
+        {{ topic.title }} ({{ topic.category.name }})
+        | <a href="{% url 'delete_topic' topic.id %}" style="color: red;">Удалить</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

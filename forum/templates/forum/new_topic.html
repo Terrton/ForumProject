@@ -1,0 +1,10 @@
+{% extends "forum/base.html" %}
+{% block title %}Новая тема{% endblock %}
+{% block content %}
+<h2>Создать новую тему в категории "{{ category.name }}"</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Создать тему</button>
+</form>
+{% endblock %}

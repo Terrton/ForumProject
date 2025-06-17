@@ -1,0 +1,11 @@
+{% extends "forum/base.html" %}
+{% block title %}{{ category.name }}{% endblock %}
+{% block content %}
+<h2>Темы в категории: {{ category.name }}</h2>
+<p><a href="{% url 'new_topic' category.id %}">Создать новую тему</a></p>
+<ul>
+    {% for topic in topics %}
+    <li><a href="{% url 'topic_posts' topic.id %}">{{ topic.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

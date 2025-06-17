@@ -1,0 +1,33 @@
+# Служебные папки Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Папки сборки
+bin/
+obj/
+publish/
+Build/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# Резервные копии
+*.bak
+*.tmp
+*.log
+
+# Конфигурационные файлы среды разработки
+*.vspscc
+*.vssscc
+
+# Файлы macOS (если вы работаете на Windows, но кто знает)
+.DS_Store
+
+# Файлы Windows
+Thumbs.db
+desktop.ini

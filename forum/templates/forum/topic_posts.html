@@ -1,0 +1,57 @@
+{% extends "forum/base.html" %}
+{% block title %}{{ topic.title }}{% endblock %}
+{% block content %}
+<h2>{{ topic.title }}</h2>
+<p>Автор: {{ topic.author }}, Дата: {{ topic.created_at }}</p>
+
+    {% if user == topic.author or user.is_superuser or user.profile.role == 'teacher' %}
+<a href="{% url 'edit_topic' topic.id %}">Редактировать тему</a>
+    {% endif %}
+
+<hr>
+<h3>Сообщения:</h3>
+    {% for post in posts %}
+<div style="margin-bottom: 20px; border-bottom: 1px solid #ccc;">
+    <p><strong>{{ post.author }}</strong>: {{ post.content }}</p>
+    <small>{{ post.created_at }}</small>
+
+    {% if user == post.author or user.is_superuser or user.profile.role == 'teacher' %}
+    | <a href="{% url 'edit_post' post.id %}">Редактировать</a>
+    {% endif %}
+</div>
+    {% endfor %}
+<hr>
+<p><a href="{% url 'new_post' topic.id %}">Добавить сообщение</a></p>
+{% endblock %}
+
+{% for post in posts %}
+<div style="margin-bottom: 20px; border-bottom: 1px solid #ccc;">
+    <p><strong>{{ post.author }}</strong>: {{ post.content }}</p>
+    <small>{{ post.created_at }}</small>
+
+    {% if user == post.author or user.is_superuser %}
+    <br>
+    <a href="{% url 'delete_post' post.id %}" style="color: red;">Удалить сообщение</a>
+    {% endif %}
+</div>
+{% endfor %}
+
+<h2>{{ topic.title }}</h2>
+<p>Автор: {{ topic.author }}, Дата: {{ topic.created_at }}</p>
+
+{% if user == topic.author or user.is_superuser %}
+<a href="{% url 'delete_topic' topic.id %}" style="color: red;">Удалить тему</a>
+{% endif %}
+
+<small>
+    Роль:
+    {% if request.user.profile.role == 'student' %}
+    Студент
+    {% else %}
+    Преподаватель
+    {% endif %}
+</small>
+
+{% if request.user.profile.role == 'teacher' %}
+<p><strong>Вы преподаватель — вам доступно управление.</strong></p>
+{% endif %}
